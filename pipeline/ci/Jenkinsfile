@@ -1,0 +1,15 @@
+@Library("dsd-jenkins-k8s") _
+
+deployProject (
+    serviceName: "sonar-react-demo",
+    projectType: "npm",
+    customImage: "node:8.12.0-slim",
+    buildCommand: "npm --without-ssl --insecure install && npm run build",
+    testCommand: "CI=true npm test -- --coverage --testResultsProcessor=jest-sonar-reporter",
+    sonarCommand: "npm config set proxy http://pkg.proxy.prod.jp.local:10080 && npm config set https-proxy http://pkg.proxy.prod.jp.local:10080 && npm run sonar",
+    sonarQubeName: "SonarQubeDemo",
+    skipDockerBuild: "true",
+    skipDockerPush: "true",
+    skipDeployment: "true",
+    ignoreGitHeadMove: "true",
+    targetEnv: "stg",)
